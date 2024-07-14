@@ -1,0 +1,33 @@
+# .NET
+*.exe
+*.dll
+*.pdb
+*.cache
+*.mdb
+*.log
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build Folders
+bin/
+obj/
+
+# VS Code
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# JetBrains Rider
+.idea/
