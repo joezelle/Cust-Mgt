@@ -58,22 +58,30 @@ namespace CustomerMgt.Core.Tests
         public async Task DeleteCustomer_ValidId_ShouldDeleteSuccessfully()
         {
             var customerId = 12;
-            var deletedCustomer =  new CustomerModel
+            var existingCustomer = new CustomerModel
+            {
+                Id = customerId,
+                IsDeleted = false,
+                IsActive = true
+            };
+            var deletedCustomer = new CustomerModel
             {
                 Id = customerId,
                 IsDeleted = true,
-                IsActive = false,
-                
+                IsActive = false
             };
+
+            _mockRepository.Setup(repo => repo.Get(customerId))
+                   .ReturnsAsync(existingCustomer);
 
             _mockRepository.Setup(repo => repo.Delete(customerId))
                           .ReturnsAsync(deletedCustomer);
 
             var result = await _customerManager.Delete(customerId);
 
-            //Assert.NotNull(result);
-            //Assert.True(result.IsDeleted);
-            //Assert.False(result.IsActive);
+            Assert.NotNull(result);
+            Assert.True(result.IsDeleted);
+            Assert.False(result.IsActive);
 
 
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CustomerMgt.Core.Managers
 {
-    public class CustomerManager
+    public class CustomerManager : ICustomerManager
     {
         private readonly ICustomerRepository _customerRepository;
 
