@@ -99,7 +99,6 @@ namespace CustomerMgt.Core.Tests
             var existingCustomer = GetMockCustomer();
 
 
-
             _mockRepository.Setup(repo => repo.Update(It.IsAny<CustomerModel>()))
                            .ReturnsAsync(existingCustomer);
 
