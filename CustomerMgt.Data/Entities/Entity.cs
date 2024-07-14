@@ -12,11 +12,11 @@ namespace CustomerMgt.Data.Entities
         {
             IsActive = true;
             IsDeleted = false;
-            DateCreated = DateTimeOffset.Now;
+            DateCreated = DateTime.Now;
         }
 
         public TPrimaryKey Id { get; set; }
-        public DateTimeOffset DateCreated { get; set; } 
+        public DateTime DateCreated { get; set; } 
 
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
