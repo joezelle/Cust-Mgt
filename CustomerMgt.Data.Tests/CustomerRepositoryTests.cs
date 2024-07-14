@@ -49,7 +49,7 @@ namespace CustomerMgt.Data.Tests
 
             var mockCustomer = GetMockCustomer();
 
-            var newCustomer = await CreateAndSaveCustomerAsync(mockCustomer);
+            var newCustomer = await _repositoryTests.Create(mockCustomer);
             newCustomer.FirstName.Should().Be("John");
             newCustomer.Should().NotBeNull();
 

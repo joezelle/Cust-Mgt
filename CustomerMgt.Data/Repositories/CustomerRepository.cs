@@ -1,4 +1,5 @@
-﻿using CustomerMgt.Core.Models;
+﻿using CustomerMgt.Core.Interfaces;
+using CustomerMgt.Core.Models;
 using CustomerMgt.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CustomerMgt.Data.Repositories
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private DbContext _dbContext;
 
