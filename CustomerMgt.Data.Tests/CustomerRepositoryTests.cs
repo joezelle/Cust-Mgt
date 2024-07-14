@@ -22,19 +22,33 @@ namespace CustomerMgt.Data.Tests
         }
 
 
+        private CustomerModel GetMockCustomer()
+        {
+            return new CustomerModel
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Gender = "Male",
+                Address = "123 Main St",
+                Email = "john.doe@example.com"
+            };
+        }
+
         [Fact]
         public async Task AddCustomer_ValidCustomer_SavesToDatabase()
         {
-            
 
-            var mockCustomer = new Mock<CustomerModel>();
+            var mockCustomer = GetMockCustomer();
 
+            var customer = await _repositoryTests.Create(mockCustomer);
+            customer.FirstName.Should().Be("John");
+            customer.Should().NotBeNull();
 
-            await _repositoryTests.Create(mockCustomer.Object);
-
-
-            var savedCustomer = _appContext.Customers.FindAsync(mockCustomer.Object.Id);
+            var savedCustomer = await _appContext.Customers.FindAsync(customer.Id);
             savedCustomer.Should().NotBeNull();
+            savedCustomer?.FirstName.Should().Be("John");
+            savedCustomer?.LastName.Should().Be("Doe");
+            
         }
     }
 }
