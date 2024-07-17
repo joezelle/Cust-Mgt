@@ -1,6 +1,7 @@
 ﻿using CustomerMgt.Core.Interfaces;
 using CustomerMgt.Core.Models;
 using CustomerMgt.Data.Entities;
+using CustomerMgt.Data.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace CustomerMgt.Data.Repositories
                 return null;
 
             entity.Address = model.Address;
-            entity.Gender = model.Gender;
+            entity.PhoneNumber = model.PhoneNumber;
             entity.FirstName = model.FirstName;
             entity.LastName = model.LastName;
             entity.Email = model.Email;
@@ -74,9 +75,48 @@ namespace CustomerMgt.Data.Repositories
             {
                 return null;
             }
+           
 
             return entity.Map();
         }
 
+        public async Task<Page<CustomerModel>> Get(int pageNumber, int pageSize)
+        {
+            var query = _dbContext.Set<Customer>()
+                .Select(result => new CustomerModel
+                {
+                    DateCreated = result.DateCreated,
+                    IsActive = result.IsActive,
+                    IsDeleted = result.IsDeleted,
+                    Id = result.Id,
+                    Address = result.Address,
+                    Email = result.Email,
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                })
+                .OrderByDescending(x => x.DateCreated);
+
+            var results = await query.ToPageListAsync(pageNumber, pageSize);
+
+            return results;
+        }
+
+        public async Task<List<CustomerModel>> Get()
+        {
+            var query = _dbContext.Set<Customer>().Select(result => new CustomerModel
+            {
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                Email = result.Email,
+                Address = result.Address,
+                DateCreated = result.DateCreated,
+                IsActive = result.IsActive,
+                IsDeleted = result.IsDeleted,
+
+            }).OrderByDescending(x => x.LastName);
+
+            var results = await query.ToListAsync();
+            return results;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace CustomerMgt.Api.Tests
                 Id = 1,
                 FirstName = "John",
                 LastName = "Doe",
-                Gender = "Male",
+                PhoneNumber = "0001122333",
                 Address = "123 Main St",
                 Email = "john.doe@example.com"
             };
@@ -39,7 +39,7 @@ namespace CustomerMgt.Api.Tests
             Assert.Equal(expectedCustomer.FirstName, actualCustomer.FirstName);
             Assert.Equal(expectedCustomer.LastName, actualCustomer.LastName);
             Assert.Equal(expectedCustomer.Email, actualCustomer.Email);
-            Assert.Equal(expectedCustomer.Gender, actualCustomer.Gender);
+            Assert.Equal(expectedCustomer.PhoneNumber, actualCustomer.PhoneNumber);
             Assert.Equal(expectedCustomer.Address, actualCustomer.Address);
         }
 
@@ -97,7 +97,7 @@ namespace CustomerMgt.Api.Tests
             var updatedCustomer = GetMockCustomer();
             updatedCustomer.FirstName = "Jane";
             updatedCustomer.LastName = "Smith";
-            updatedCustomer.Gender = "Female";
+            updatedCustomer.PhoneNumber = "00011222333";
             updatedCustomer.Address = "456 Main St";
             updatedCustomer.Email = "jane.smith@email.com";
 
@@ -105,7 +105,7 @@ namespace CustomerMgt.Api.Tests
             {
                 FirstName = updatedCustomer.FirstName,
                 LastName = updatedCustomer.LastName,
-                Gender = updatedCustomer.Gender,
+                PhoneNumber = updatedCustomer.PhoneNumber,
                 Address = updatedCustomer.Address,
                 Email = updatedCustomer.Email
             };
@@ -142,7 +142,7 @@ namespace CustomerMgt.Api.Tests
             {
                 FirstName = newCustomer.FirstName,
                 LastName = newCustomer.LastName,
-                Gender = newCustomer.Gender,
+                PhoneNumber = newCustomer.PhoneNumber,
                 Address = newCustomer.Address,
                 Email = newCustomer.Email
             };

@@ -13,5 +13,7 @@ namespace CustomerMgt.Core.Interfaces
         Task<CustomerModel> Delete(long id);
         Task<CustomerModel> GetById(long id);
         Task<CustomerModel> Update(CustomerModel customerModel);
+        Task<Page<CustomerModel>> GetByPage(int pageNumber, int pageSize);
+        Task<List<CustomerModel>> GetList();
     }
 }

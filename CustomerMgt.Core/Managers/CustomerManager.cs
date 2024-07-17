@@ -57,7 +57,22 @@ namespace CustomerMgt.Core.Managers
             if (result == null)
                 throw new NotFoundException("Customer not found");
 
+            if(result.IsDeleted || !result.IsActive)
+            {
+                throw new BadRequestException("Request Failed");
+            }
+
             return result;
+        }
+
+        public async Task<Page<CustomerModel>> GetByPage(int pageNumber, int pageSize)
+        {
+            return await _customerRepository.Get(pageNumber, pageSize);
+        }
+
+        public async Task<List<CustomerModel>> GetList()
+        {
+            return await _customerRepository.Get().ConfigureAwait(false);
         }
 
         public async Task<CustomerModel> Update(CustomerModel customerModel)

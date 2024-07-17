@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.API", "CustomerMgtAPI\CustomerMgt.API.csproj", "{9E234E5B-942B-4D0E-AC17-28A92423738B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMVC", "CustomerMVC\CustomerMVC.csproj", "{0D1D4C58-D51B-4269-8BFB-6C958E5614D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.MVC", "CustomerMVC\CustomerMgt.MVC.csproj", "{0D1D4C58-D51B-4269-8BFB-6C958E5614D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D38EC1F0-415C-45B4-9096-52C1EE08F5AB}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,13 +23,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Core", "Custome
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Data", "CustomerMgt.Data\CustomerMgt.Data.csproj", "{4782693A-257B-4486-BE42-C1DC52FEB9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMgt.Api.Tests", "CustomerMgt.Api.Tests\CustomerMgt.Api.Tests.csproj", "{F6C53A39-1B93-4DDA-BFB5-5C0CA95AC74F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Api.Tests", "CustomerMgt.Api.Tests\CustomerMgt.Api.Tests.csproj", "{F6C53A39-1B93-4DDA-BFB5-5C0CA95AC74F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMgt.Data.Tests", "CustomerMgt.Data.Tests\CustomerMgt.Data.Tests.csproj", "{63ED9091-432C-4383-9F2D-9D2F9EB513C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Data.Tests", "CustomerMgt.Data.Tests\CustomerMgt.Data.Tests.csproj", "{63ED9091-432C-4383-9F2D-9D2F9EB513C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMgt.Infrastructure.Tests", "CustomerMgt.Infrastructure.Tests\CustomerMgt.Infrastructure.Tests.csproj", "{C32B3427-B575-4E07-8FEC-9ADEAAB7D971}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Infrastructure.Tests", "CustomerMgt.Infrastructure.Tests\CustomerMgt.Infrastructure.Tests.csproj", "{C32B3427-B575-4E07-8FEC-9ADEAAB7D971}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMgt.Core.Tests", "CustomerMgt.Core.Tests\CustomerMgt.Core.Tests.csproj", "{D6FC56F0-34E4-458F-A80B-676E341EDDC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMgt.Core.Tests", "CustomerMgt.Core.Tests\CustomerMgt.Core.Tests.csproj", "{D6FC56F0-34E4-458F-A80B-676E341EDDC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerMgt.Infrastructure", "CustomerMgt.Infrastructure\CustomerMgt.Infrastructure.csproj", "{B3F33EE1-1E78-428D-8957-30B1FC396235}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{D6FC56F0-34E4-458F-A80B-676E341EDDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6FC56F0-34E4-458F-A80B-676E341EDDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6FC56F0-34E4-458F-A80B-676E341EDDC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3F33EE1-1E78-428D-8957-30B1FC396235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F33EE1-1E78-428D-8957-30B1FC396235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3F33EE1-1E78-428D-8957-30B1FC396235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3F33EE1-1E78-428D-8957-30B1FC396235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{63ED9091-432C-4383-9F2D-9D2F9EB513C6} = {9B746337-718F-45C4-B4EB-3B1825D6B5B5}
 		{C32B3427-B575-4E07-8FEC-9ADEAAB7D971} = {9B746337-718F-45C4-B4EB-3B1825D6B5B5}
 		{D6FC56F0-34E4-458F-A80B-676E341EDDC9} = {9B746337-718F-45C4-B4EB-3B1825D6B5B5}
+		{B3F33EE1-1E78-428D-8957-30B1FC396235} = {078D221D-8A5D-4A33-A8A6-C1D090F3C9DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38EBE902-BF72-4E60-A3EA-4B83BDA7C0FB}

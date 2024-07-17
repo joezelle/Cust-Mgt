@@ -19,7 +19,7 @@ namespace CustomerMgt.API.Controllers
             _customerMangager = customerMangager;
         }
 
-        [HttpGet("GetEmployeeById")]
+        [HttpGet("byId")]
         public async Task<IActionResult> GetCustomerById(long id)
         {
 
@@ -51,7 +51,7 @@ namespace CustomerMgt.API.Controllers
                 Email = model.Email,
                 Address = model.Address,
                 DateCreated = DateTime.Now,
-                Gender = model.Gender,
+                PhoneNumber = model.PhoneNumber,
                 IsActive = true,
 
 
@@ -82,7 +82,7 @@ namespace CustomerMgt.API.Controllers
                 Address = model.Address,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                Gender = model.Gender,
+                PhoneNumber = model.PhoneNumber,
                 LastName = model.LastName,
 
             });
@@ -109,6 +109,30 @@ namespace CustomerMgt.API.Controllers
                 RequestSuccessful = true,
                 ResponseCode = ResponseCodes.Successful,
                 ResponseData = await _customerMangager.Delete(id)
+            });
+        }
+
+        [HttpGet("{pageNumber}/{pageSize}")]
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 20)
+        {
+            return Ok(new ResponseModel<object>
+            {
+                RequestSuccessful = true,
+                ResponseCode = ResponseCodes.Successful,
+                Message = "Successful",
+                ResponseData = await _customerMangager.GetByPage(pageNumber, pageSize)
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList()
+        {
+            return Ok(new ResponseModel<object>
+            {
+                RequestSuccessful = true,
+                ResponseCode = ResponseCodes.Successful,
+                Message = "Successful",
+                ResponseData = await _customerMangager.GetList()
             });
         }
     }

@@ -15,6 +15,5 @@ namespace CustomerMgt.Data
         }
 
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

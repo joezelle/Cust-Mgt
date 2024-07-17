@@ -22,7 +22,7 @@ namespace CustomerMgt.Core.Tests
             {
                 FirstName = "John",
                 LastName = "Doe",
-                Gender = "Male",
+                PhoneNumber = "000111222333",
                 Address = "123 Main St",
                 Email = "john.doe@example.com"
             };
