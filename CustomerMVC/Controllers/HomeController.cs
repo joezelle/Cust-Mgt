@@ -1,8 +1,8 @@
-﻿using CustomerMVC.Models;
+﻿using CustomerMgt.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CustomerMVC.Controllers
+namespace CustomerMgt.MVC.Controllers
 {
     public class HomeController : Controller
     {
@@ -29,4 +29,5 @@ namespace CustomerMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-}
+
+}  

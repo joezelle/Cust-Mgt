@@ -1,4 +1,4 @@
-namespace CustomerMVC.Models
+﻿namespace CustomerMgt.MVC.Models
 {
     public class ErrorViewModel
     {

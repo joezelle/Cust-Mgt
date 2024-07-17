@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CustomerMgt.MVC.Models.Customer>
+
+<h2>Customers</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.Email</td>
+                <td>@customer.PhoneNumber</td>
+                <td>@customer.Address</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = customer.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = customer.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create")" class="btn btn-success">Add New Customer</a>
+
+@*<div>
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-light">Previous</a>
+    }
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-light">Next</a>
+    }
+</div>*@
