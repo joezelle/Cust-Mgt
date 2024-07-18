@@ -1,6 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using CustomerMgt.Infrastructure.DIExtensions;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Diagnostics;
+using CustomerMgt.Core.Services;
+using CustomerMgt.Infrastructure.Filters;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +25,41 @@ builder.Services.AddSwaggerGen(c=>
 });
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:44342", "https://localhost:44342") 
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 
 
 
 var app = builder.Build();
+
+app.UseExceptionHandler(builder =>
+{
+    builder.Run(
+        async context =>
+        {
+            var error = context.Features.Get<IExceptionHandlerFeature>();
+            var exception = error.Error;
+
+            var logger = context.RequestServices.GetService<ILoggerService?>();
+            logger.Error(exception);
+
+            var (responseModel, statusCode) = GlobalExceptionFilter.GetStatusCode<object>(exception);
+            context.Response.StatusCode = (int)statusCode;
+            context.Response.ContentType = "application/json";
+
+            var responseJson = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+            await context.Response.WriteAsync(responseJson);
+        });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -34,6 +69,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigins");
 
 app.UseAuthorization();
 

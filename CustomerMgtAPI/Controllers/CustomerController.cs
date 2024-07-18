@@ -2,6 +2,7 @@
 using CustomerMgt.Core.Interfaces;
 using CustomerMgt.Core.Models;
 using CustomerMgt.Core.RequestModels;
+using CustomerMgt.Core.Services;
 using CustomerMgt.Core.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,12 @@ namespace CustomerMgt.API.Controllers
     {
         private readonly ICustomerManager _customerMangager;
 
-        public CustomerController(ICustomerManager customerMangager)
+        public ILoggerService _loggerService { get; }
+
+        public CustomerController(ICustomerManager customerMangager, ILoggerService loggerService)
         {
             _customerMangager = customerMangager;
+            _loggerService = loggerService;
         }
 
         [HttpGet("byId")]
@@ -24,7 +28,7 @@ namespace CustomerMgt.API.Controllers
         {
 
 
-            //_loggerService.LogInfo("Get Employee");
+            _loggerService.LogInfo("Get customer");
 
             if (id <= default(long))
             {
@@ -41,9 +45,9 @@ namespace CustomerMgt.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerRequestModel model)
         {
-            
 
-            //model.Validate();
+            _loggerService.LogInfo("Create customer");
+
             var result = await _customerMangager.Create(new CustomerModel
             {
                 FirstName = model.FirstName,
@@ -70,6 +74,7 @@ namespace CustomerMgt.API.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody] CustomerRequestModel model, long id)
         {
+            _loggerService.LogInfo("update customer");
             if (id <= default(long))
             {
                 throw new BadRequestException("Customer Id is required");
@@ -81,7 +86,7 @@ namespace CustomerMgt.API.Controllers
                 Id = id,
                 Address = model.Address,
                 Email = model.Email,
-                FirstName = model.FirstName,
+                FirstName = model.FirstName, 
                 PhoneNumber = model.PhoneNumber,
                 LastName = model.LastName,
 
@@ -98,7 +103,8 @@ namespace CustomerMgt.API.Controllers
 
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete(long id)
-        {
+        { 
+            _loggerService.LogInfo( "Delete customer");
             if (id <= default(long))
             {
                 throw new BadRequestException("Customer Id is required");
@@ -115,6 +121,8 @@ namespace CustomerMgt.API.Controllers
         [HttpGet("{pageNumber}/{pageSize}")]
         public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 20)
         {
+
+            _loggerService.LogInfo("Get All customer");
             return Ok(new ResponseModel<object>
             {
                 RequestSuccessful = true,
@@ -127,6 +135,7 @@ namespace CustomerMgt.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
+            _loggerService.LogInfo("Get Customer List");
             return Ok(new ResponseModel<object>
             {
                 RequestSuccessful = true,

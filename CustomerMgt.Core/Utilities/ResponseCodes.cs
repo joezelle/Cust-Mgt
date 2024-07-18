@@ -11,5 +11,6 @@ namespace CustomerMgt.Core.Utilities
         public const string Successful = "00";
         public const string Failed = "99";
         public const string NotFound = "03";
+        public const string ModelValidation = "09";
     }
 }
