@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<CustomerMgt.MVC.Models.CustomerModel>
 
 <h2>Customers</h2>
+
+<a href="@Url.Action("Create")" class="btn btn-success">Add New Customer</a>
 <table class="table">
     <thead>
         <tr>
@@ -30,15 +32,37 @@
         }
     </tbody>
 </table>
-<a href="@Url.Action("Create")" class="btn btn-success">Add New Customer</a>
 
-@*<div>
-    @if (Model.HasPreviousPage)
+<div>
+    @if (ViewBag.TotalCount != null && ViewBag.PageNumber != null && ViewBag.PageSize != null)
     {
-        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-light">Previous</a>
+        var totalCount = (int)ViewBag.TotalCount;
+        var pageNumber = (int)ViewBag.PageNumber;
+        var pageSize = (int)ViewBag.PageSize;
+
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        <ul class="pagination">
+            @if (pageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = pageNumber - 1, pageSize = pageSize })">Previous</a>
+                </li>
+            }
+
+            @for (var i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == pageNumber ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = pageSize })">@i</a>
+                </li>
+            }
+
+            @if (pageNumber < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = pageNumber + 1, pageSize = pageSize })">Next</a>
+                </li>
+            }
+        </ul>
     }
-    @if (Model.HasNextPage)
-    {
-        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-light">Next</a>
-    }
-</div>*@
+</div>
