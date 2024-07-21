@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using CustomerMgt.Core.Services;
 using CustomerMgt.Infrastructure.Filters;
+using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,10 @@ IWebHostEnvironment environment = builder.Environment;
 builder.Services.AddAppServices();
 builder.Services.AddDatabaseServices(configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+}); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c=>

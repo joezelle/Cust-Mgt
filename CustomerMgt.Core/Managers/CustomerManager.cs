@@ -23,10 +23,7 @@ namespace CustomerMgt.Core.Managers
 
             var result = await _customerRepository.Create(customerModel);
 
-            if (result == null)
-                throw new BadRequestException("Request failed");
-
-            return result;
+            return result ?? throw new BadRequestException("Request failed");
         }
 
         public async Task<CustomerModel> Delete(long id)
@@ -38,10 +35,7 @@ namespace CustomerMgt.Core.Managers
 
             var result = await _customerRepository.Get(id);
 
-            if (result == null)
-                throw new NotFoundException("customer not found");
-
-            return await _customerRepository.Delete(id);
+            return result == null ? throw new NotFoundException("customer not found") : await _customerRepository.Delete(id);
         }
 
 
@@ -61,6 +55,8 @@ namespace CustomerMgt.Core.Managers
             {
                 throw new BadRequestException("Request Failed");
             }
+                
+            
 
             return result;
         }
@@ -79,10 +75,7 @@ namespace CustomerMgt.Core.Managers
         {
             var result = await _customerRepository.Update(customerModel);
 
-            if (result == null)
-                throw new BadRequestException("Request failed");
-
-            return result;
+            return result == null ? throw new BadRequestException("Request failed") : result;
         }
     }
 }

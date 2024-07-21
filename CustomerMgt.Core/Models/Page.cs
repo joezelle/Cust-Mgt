@@ -11,9 +11,9 @@ namespace CustomerMgt.Core.Models
         public int PageSize { get; }
         public int PageNumber { get; }
         public int TotalSize { get; }
-        public T[] Items { get; set; }
+        public List<T> Items { get; set; }
 
-        public Page(T[] items, int totalSize, int pageNumber, int pageSize)
+        public Page(List<T> items, int totalSize, int pageNumber, int pageSize)
         {
             if (pageNumber < 1) pageNumber = 1;
             TotalSize = totalSize;

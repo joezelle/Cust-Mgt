@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CustomerMgt.MVC.Models.Customer>
+﻿@model IEnumerable<CustomerMgt.MVC.Models.CustomerModel>
 
 <h2>Customers</h2>
 <table class="table">
@@ -7,7 +7,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Gender</th>
+            <th>PhoneNumber</th>
             <th>Address</th>
             <th>Actions</th>
         </tr>
@@ -15,6 +15,7 @@
     <tbody>
         @foreach (var customer in Model)
         {
+            Console.WriteLine(Model);
             <tr>
                 <td>@customer.FirstName</td>
                 <td>@customer.LastName</td>

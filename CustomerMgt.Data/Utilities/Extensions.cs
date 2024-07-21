@@ -14,7 +14,7 @@ namespace CustomerMgt.Data.Utilities
         {
             var count = await query.CountAsync();
             int offset = (pageNumber - 1) * pageSize;
-            var items = await query.Skip(offset).Take(pageSize).ToArrayAsync();
+            var items = await query.Skip(offset).Take(pageSize).ToListAsync();
             return new Page<T>(items, count, pageNumber, pageSize);
         }
     }

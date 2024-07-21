@@ -13,7 +13,7 @@ namespace CustomerMgt.Data.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private DbContext _dbContext;
+        private readonly DbContext _dbContext;
 
         public CustomerRepository(DbContext dbContext) 
         {
@@ -42,6 +42,7 @@ namespace CustomerMgt.Data.Repositories
             entity.FirstName = model.FirstName;
             entity.LastName = model.LastName;
             entity.Email = model.Email;
+            entity.Id = model.Id;
 
 
             await _dbContext.SaveChangesAsync();
@@ -93,8 +94,9 @@ namespace CustomerMgt.Data.Repositories
                     Email = result.Email,
                     FirstName = result.FirstName,
                     LastName = result.LastName,
+                    PhoneNumber= result.PhoneNumber
                 })
-                .OrderByDescending(x => x.DateCreated);
+                .OrderByDescending(x => x.DateCreated).Where(x => !x.IsDeleted);
 
             var results = await query.ToPageListAsync(pageNumber, pageSize);
 
@@ -112,6 +114,9 @@ namespace CustomerMgt.Data.Repositories
                 DateCreated = result.DateCreated,
                 IsActive = result.IsActive,
                 IsDeleted = result.IsDeleted,
+                Id = result.Id,
+                PhoneNumber = result.PhoneNumber
+                
 
             }).OrderByDescending(x => x.LastName);
 

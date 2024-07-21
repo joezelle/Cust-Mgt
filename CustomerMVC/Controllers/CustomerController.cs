@@ -5,77 +5,184 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerMgt.MVC.Controllers
 {
-    
-        public class CustomerController : Controller
+
+    public class CustomerController : Controller
+    {
+        private readonly ICustomerService _customerService;
+
+        public CustomerController(ICustomerService customerService)
         {
-            private readonly CustomerService _customerService;
-
-            public CustomerController(CustomerService customerService)
-            {
-                _customerService = customerService;
-            }
-
-            public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
-            {
-                var customers = await _customerService.GetCustomersAsync(pageNumber,pageSize);
-                return View(customers);
-            }
-
-            public IActionResult Create()
-            {
-                return View();
-            }
-
-            //[HttpPost]
-            //public async Task<IActionResult> Create(Customer customer)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        await _customerService.CreateCustomerAsync(customer);
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    return View(customer);
-            //}
-
-            public async Task<IActionResult> Edit(int id)
-            {
-                var customer = await _customerService.GetCustomerByIdAsync(id);
-                if (customer == null)
-                {
-                    return NotFound();
-                }
-                return View(customer);
-            }
-
-            //[HttpPost]
-            //public async Task<IActionResult> Edit(Customer customer)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        await _customerService.UpdateCustomerAsync(customer);
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    return View(customer);
-            //}
-
-            public async Task<IActionResult> Delete(int id)
-            {
-                var customer = await _customerService.GetCustomerByIdAsync(id);
-                if (customer == null)
-                {
-                    return NotFound();
-                }
-                return View(customer);
-            }
-
-            //[HttpPost, ActionName("Delete")]
-            //public async Task<IActionResult> DeleteConfirmed(int id)
-            //{
-            //    await _customerService.DeleteCustomerAsync(id);
-            //    return RedirectToAction(nameof(Index));
-            //}
-
-            
+            _customerService = customerService;
         }
-    
+
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
+        {
+            var response = await _customerService.GetAllCustomersAsync(pageNumber, pageSize);
+            if (response.RequestSuccessful)
+            {
+                if (response != null && response.ResponseData != null)
+                {
+                    ViewBag.TotalCount = response.ResponseData.TotalSize;
+                    ViewBag.PageNumber = response.ResponseData.PageNumber;
+                    ViewBag.PageSize = response.ResponseData.PageSize;
+                    return View(response.ResponseData.Items);
+                }
+                else
+                {
+                    return View("Error", new ResponseModel<string>
+                    {
+                        RequestSuccessful = false,
+                        ResponseCode = "500",
+                        Message = "No Data was returned"
+                    });
+                }
+                
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+        public async Task<IActionResult> Details(long id)
+        {
+            var response = await _customerService.GetCustomerByIdAsync(id);
+            if (response.RequestSuccessful)
+            {
+                if(response.ResponseData== null)
+                {
+                    return NotFound();
+                }
+
+
+                return View(response.ResponseData);
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CustomerModel customer)
+        {
+            var response = await _customerService.CreateCustomerAsync(customer);
+            if (response.RequestSuccessful)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(long id, CustomerModel customer)
+        {
+            var response = await _customerService.UpdateCustomerAsync(customer);
+            if (response.RequestSuccessful)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+        public async Task<IActionResult> Edit(long id)
+        {
+
+            var response = await _customerService.GetCustomerByIdAsync(id);
+            if (response.RequestSuccessful)
+            {
+                if (response.ResponseData == null)
+                {
+                    return View("Error", new ResponseModel<string>
+                    {
+                        RequestSuccessful = false,
+                        ResponseCode = "404",
+                        Message = "Customer not found"
+                    });
+                };
+
+                return View("Edit", response.ResponseData);
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            }) ;
+        }
+
+        public async Task<IActionResult> Delete(long id)
+        {
+            var response = await _customerService.GetCustomerByIdAsync(id);
+            if (response.RequestSuccessful)
+            {
+                if (response.ResponseData == null)
+                {
+                    return View("Error", new ResponseModel<string>
+                    {
+                        RequestSuccessful = false,
+                        ResponseCode = "404",
+                        Message = "Customer not found"
+                    });
+                };
+
+                return View("Delete", response.ResponseData);
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCustomer(long id)
+        {
+            var response = await _customerService.DeleteCustomerAsync(id);
+            if (response.RequestSuccessful)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Error", new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = response.Message
+            });
+        }
+
+        public IActionResult Error()
+        {
+            var responseModel = new ResponseModel<string>
+            {
+                RequestSuccessful = false,
+                ResponseCode = "500",
+                Message = "An unexpected error occurred"
+            };
+            return View(responseModel);
+        }
+
+    }
 }

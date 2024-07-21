@@ -1,8 +1,9 @@
-﻿@model CustomerMgt.MVC.Models.Customer
+﻿@model CustomerMgt.MVC.Models.CustomerModel
 
 <h2>Edit Customer</h2>
 
 <form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" class="form-control" />
