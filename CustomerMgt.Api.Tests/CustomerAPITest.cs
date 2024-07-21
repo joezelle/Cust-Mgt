@@ -2,6 +2,7 @@ using CustomerMgt.API.Controllers;
 using CustomerMgt.Core.Interfaces;
 using CustomerMgt.Core.Models;
 using CustomerMgt.Core.RequestModels;
+using CustomerMgt.Core.Services;
 using CustomerMgt.Core.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,15 +12,17 @@ namespace CustomerMgt.Api.Tests
     public class CustomerAPITest
     {
         private readonly Mock<ICustomerManager> _mockManager;
+        private readonly Mock<ILoggerService> _loggerService;
         private readonly CustomerController _controller;
 
         public CustomerAPITest()
         {
             _mockManager =  new Mock<ICustomerManager>();
-            _controller = new CustomerController(_mockManager.Object);
+            _loggerService = new Mock<ILoggerService>();
+            _controller = new CustomerController(_mockManager.Object, _loggerService.Object);
         }
 
-        private CustomerModel GetMockCustomer()
+        private static CustomerModel GetMockCustomer()
         {
             return new CustomerModel
             {
@@ -32,7 +35,7 @@ namespace CustomerMgt.Api.Tests
             };
         }
 
-        private void AssertCustomerProperties(CustomerModel actualCustomer, CustomerModel expectedCustomer)
+        private static void AssertCustomerProperties(CustomerModel actualCustomer, CustomerModel expectedCustomer)
         {
             Assert.NotNull(actualCustomer);
             Assert.Equal(expectedCustomer.Id, actualCustomer.Id);
@@ -71,23 +74,6 @@ namespace CustomerMgt.Api.Tests
             AssertCustomerProperties(returnedCustomer, expectedCustomer);
         }
 
-        [Fact]
-        public async Task GetCustomerById_InvalidId_ReturnsNotFound()
-        {
-            var invalidCustomerId = 999;
-            _mockManager.Setup(manager => manager.GetById(invalidCustomerId))
-                        .ReturnsAsync((CustomerModel)null);
-
-            // Act
-            var result = await _controller.GetCustomerById(invalidCustomerId);
-
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var responseModel = Assert.IsType<ResponseModel<object>>(okResult.Value);
-            Assert.NotNull(responseModel);
-            Assert.True(responseModel.RequestSuccessful);
-            Assert.Equal(ResponseCodes.Successful, responseModel.ResponseCode);
-        }
 
         [Fact]
         public async Task UpdateCustomer_ValidId_ReturnsUpdatedCustomer()

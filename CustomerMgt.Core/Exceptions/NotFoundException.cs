@@ -12,7 +12,7 @@ namespace CustomerMgt.Core.Exceptions
         public NotFoundException(string message) : base(message)
         {
             base.Code = ResponseCodes.NotFound;
-            base.httpStatusCode = System.Net.HttpStatusCode.NotFound;
+            base.HttpStatusCode = System.Net.HttpStatusCode.NotFound;
         }
     }
 }

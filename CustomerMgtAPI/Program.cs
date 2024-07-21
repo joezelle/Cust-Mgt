@@ -65,7 +65,7 @@ app.UseExceptionHandler(builder =>
             var exception = error.Error;
 
             var logger = context.RequestServices.GetService<ILoggerService?>();
-            logger.LogError(exception);
+            logger.LogError(exception, "error occured");
 
             var (responseModel, statusCode) = GlobalExceptionFilter.GetStatusCode<object>(exception);
             context.Response.StatusCode = (int)statusCode;

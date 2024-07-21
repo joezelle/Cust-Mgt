@@ -10,7 +10,7 @@ namespace CustomerMgt.Core.Exceptions
     public class BaseException : Exception
     {
         public string Code { get; set; } = "";
-        public HttpStatusCode httpStatusCode { get; set; } = HttpStatusCode.InternalServerError;
+        public HttpStatusCode HttpStatusCode { get; set; } = HttpStatusCode.InternalServerError;
 
         public BaseException(string message) : base(message)
         {

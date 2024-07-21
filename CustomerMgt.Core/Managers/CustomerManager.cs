@@ -46,18 +46,13 @@ namespace CustomerMgt.Core.Managers
                 throw new BadRequestException("Id is invalid");
             }
 
-            var result = await _customerRepository.Get(id);
+            var result = await _customerRepository.Get(id) ?? throw new NotFoundException("Customer not found");
 
-            if (result == null)
-                throw new NotFoundException("Customer not found");
-
-            if(result.IsDeleted || !result.IsActive)
+            if (result.IsDeleted || !result.IsActive)
             {
-                throw new BadRequestException("Request Failed");
+                throw new BadRequestException("Customer is not active");
             }
                 
-            
-
             return result;
         }
 
@@ -75,7 +70,7 @@ namespace CustomerMgt.Core.Managers
         {
             var result = await _customerRepository.Update(customerModel);
 
-            return result == null ? throw new BadRequestException("Request failed") : result;
+            return result ?? throw new BadRequestException("Request failed");
         }
     }
 }

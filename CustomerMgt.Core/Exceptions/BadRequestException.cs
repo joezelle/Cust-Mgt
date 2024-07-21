@@ -12,7 +12,7 @@ namespace CustomerMgt.Core.Exceptions
         public BadRequestException(string message) : base(message)
         {
             base.Code = ResponseCodes.Failed;
-            base.httpStatusCode = System.Net.HttpStatusCode.BadRequest;
+            base.HttpStatusCode = System.Net.HttpStatusCode.BadRequest;
         }
     }
 }
