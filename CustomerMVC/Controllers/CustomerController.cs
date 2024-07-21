@@ -9,14 +9,18 @@ namespace CustomerMgt.MVC.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly ILoggerService _loggerService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, ILoggerService loggerService)
         {
             _customerService = customerService;
+            _loggerService = loggerService;
         }
 
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
+
+            _loggerService.LogInfo("Get All customers");
             var response = await _customerService.GetAllCustomersAsync(pageNumber, pageSize);
             if (response.RequestSuccessful)
             {
@@ -48,6 +52,7 @@ namespace CustomerMgt.MVC.Controllers
 
         public async Task<IActionResult> Details(long id)
         {
+            _loggerService.LogInfo("Get customer detail");
             var response = await _customerService.GetCustomerByIdAsync(id);
             if (response.RequestSuccessful)
             {
@@ -75,6 +80,7 @@ namespace CustomerMgt.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CustomerModel customer)
         {
+            _loggerService.LogInfo("Create Customer");
             var response = await _customerService.CreateCustomerAsync(customer);
             if (response.RequestSuccessful)
             {
@@ -92,6 +98,7 @@ namespace CustomerMgt.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(long id, CustomerModel customer)
         {
+            _loggerService.LogInfo("Edit customer");
             var response = await _customerService.UpdateCustomerAsync(customer);
             if (response.RequestSuccessful)
             {
@@ -160,6 +167,7 @@ namespace CustomerMgt.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteCustomer(long id)
         {
+            _loggerService.LogInfo("Delete Customer");
             var response = await _customerService.DeleteCustomerAsync(id);
             if (response.RequestSuccessful)
             {

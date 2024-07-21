@@ -1,9 +1,20 @@
 using CustomerMgt.MVC.Services;
+using NLog;
+using NLog.Web;
 using YourNamespace.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// NLog 
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
+
+builder.Services.AddScoped<ILoggerService, LoggerService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+
+
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     {
@@ -16,6 +27,8 @@ builder.Services.AddHttpClient<ICustomerService, CustomerService>(client =>
 
 
 var app = builder.Build();
+
+
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

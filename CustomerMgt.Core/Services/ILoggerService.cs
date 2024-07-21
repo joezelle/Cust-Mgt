@@ -8,8 +8,8 @@ namespace CustomerMgt.Core.Services
 {
     public interface ILoggerService
     {
-        void Error(Exception ex);
-        void Warning(string message);
+        void LogError(Exception ex);
+        void LogWarning(string message);
         void LogDebug(string message);
         void LogInfo(string message);
     }

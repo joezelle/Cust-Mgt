@@ -6,8 +6,17 @@ using CustomerMgt.Core.Services;
 using CustomerMgt.Infrastructure.Filters;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using NLog;
+using NLog.Web;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// NLog 
+builder.Logging.ClearProviders(); 
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace); 
+builder.Host.UseNLog(); 
 
 // Add services to the container.
 
@@ -27,6 +36,8 @@ builder.Services.AddSwaggerGen(c=>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Customer Management", Version = "v1" });
 });
+
+
 
 
 builder.Services.AddCors(options =>
@@ -54,7 +65,7 @@ app.UseExceptionHandler(builder =>
             var exception = error.Error;
 
             var logger = context.RequestServices.GetService<ILoggerService?>();
-            logger.Error(exception);
+            logger.LogError(exception);
 
             var (responseModel, statusCode) = GlobalExceptionFilter.GetStatusCode<object>(exception);
             context.Response.StatusCode = (int)statusCode;

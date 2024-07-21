@@ -12,29 +12,34 @@ namespace CustomerMgt.Infrastructure.Implementations
 {
     public class LoggerService : ILoggerService
     {
-        //private static readonly Logger _log = LogManager.GetLogger("APPLog");
+        private readonly ILogger<LoggerService> _logger;
 
-        private static ILogger _log = LogManager.GetCurrentClassLogger();
-        public void Error(Exception ex)
-        
+        // Constructor Injection for ILogger
+        public LoggerService(ILogger<LoggerService> logger)
         {
-            _log.Error(ex, string.Format("Message : {0}  Source :{1}  StackTrace:{2} InnerException :{3}", ex.Message, ex.Source, ex.StackTrace, ex.InnerException));
-            //StackifyLib.Logger.QueueException("Error", ex, (ex.Message + ex.Source + ex.StackTrace));
+            _logger = logger;
+        }
+
+        public void LogError(Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred: {Message} Source: {Source} StackTrace: {StackTrace} InnerException: {InnerException}",
+                             ex.Message, ex.Source, ex.StackTrace, ex.InnerException?.Message);
         }
 
         public void LogDebug(string message)
         {
-            _log.Debug(message);
+            _logger.LogDebug(message);
         }
 
         public void LogInfo(string message)
         {
-            _log.Info(message);
+            _logger.LogInformation(message);
         }
 
-        public void Warning(string message)
+        public void LogWarning(string message)
         {
-            _log.Warn(message);
+            _logger.LogWarning(message);
         }
     }
+
 }
