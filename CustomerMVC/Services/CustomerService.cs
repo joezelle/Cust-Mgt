@@ -23,6 +23,7 @@ namespace CustomerMgt.MVC.Services
 
             try
             {
+
                 var url = $"{_baseUrl}api/customer/{pageNumber}/{pageSize}";
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();

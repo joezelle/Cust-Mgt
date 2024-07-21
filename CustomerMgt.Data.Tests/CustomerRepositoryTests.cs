@@ -22,7 +22,7 @@ namespace CustomerMgt.Data.Tests
         }
 
 
-        private CustomerModel GetMockCustomer()
+        private static CustomerModel GetMockCustomer()
         {
             return new CustomerModel
             {

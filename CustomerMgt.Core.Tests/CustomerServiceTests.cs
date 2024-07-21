@@ -16,7 +16,7 @@ namespace CustomerMgt.Core.Tests
             _customerManager = new CustomerManager(_mockRepository.Object);
         }
 
-        private CustomerModel GetMockCustomer()
+        private static CustomerModel GetMockCustomer()
         {
             return new CustomerModel
             {
@@ -28,7 +28,7 @@ namespace CustomerMgt.Core.Tests
             };
         }
 
-        private void AssertCustomerProperties(CustomerModel actualCustomer, CustomerModel expectedCustomer)
+        private static void AssertCustomerProperties(CustomerModel actualCustomer, CustomerModel expectedCustomer)
         {
             Assert.NotNull(actualCustomer);
             Assert.True(actualCustomer.Id == expectedCustomer.Id);

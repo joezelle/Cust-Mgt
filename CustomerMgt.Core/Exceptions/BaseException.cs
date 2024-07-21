@@ -17,9 +17,5 @@ namespace CustomerMgt.Core.Exceptions
 
         }
 
-        //public BaseException(string code, string message, Exception exception) : base(message, exception)
-        //{
-            
-        //}
     }
 }

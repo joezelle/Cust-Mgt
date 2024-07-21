@@ -31,3 +31,21 @@ logs/
 
 # JetBrains Rider
 .idea/
+
+# ASP.NET Core Secrets
+secrets.json
+
+# NuGet Packages
+*.nupkg
+
+# Database Files
+*.mdf
+*.ldf
+
+# General Temporary Files
+*.tmp
+*.swp
+
+# OS-specific Files
+.DS_Store
+Thumbs.db

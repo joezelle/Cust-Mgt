@@ -1,6 +1,5 @@
 ﻿using CustomerMgt.MVC.Models;
 using CustomerMgt.MVC.Services;
-using CustomerMgt.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerMgt.MVC.Controllers

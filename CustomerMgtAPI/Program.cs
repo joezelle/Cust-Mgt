@@ -30,7 +30,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 }); ;
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c=>
 {
@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen(c=>
 
 
 
-
+//Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
@@ -56,6 +56,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+//Excetpion Handler
 app.UseExceptionHandler(builder =>
 {
     builder.Run(
@@ -76,7 +77,7 @@ app.UseExceptionHandler(builder =>
         });
 });
 
-// Configure the HTTP request pipeline.
+//  HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
