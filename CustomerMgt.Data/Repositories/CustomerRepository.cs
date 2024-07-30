@@ -35,6 +35,7 @@ namespace CustomerMgt.Data.Repositories
         {
             var entity = await _dbContext.Set<Customer>().FindAsync(model.Id);
             if (entity == null)
+                //ignored null reference as this is handled
                 return null;
 
             entity.Address = model.Address;
@@ -55,6 +56,7 @@ namespace CustomerMgt.Data.Repositories
             var entity = await _dbContext.Set<Customer>().FindAsync(Id);
             if (entity == null)
             {
+                //ignored null reference as this is handled
                 return null;
             }
 
@@ -74,6 +76,7 @@ namespace CustomerMgt.Data.Repositories
             var entity = await _dbContext.Set<Customer>().FindAsync(id);
             if (entity == null)
             {
+                //ignored null reference as this is handled
                 return null;
             }
            
